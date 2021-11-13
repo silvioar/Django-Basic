@@ -1,0 +1,35 @@
+{% load i18n static %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Face Recognition | WT Innovation</title>    
+	
+</head>
+<body background="{% static 'img/pic6.jpg' %}">
+
+		<div class="row" >
+			        
+			        <h1 class="title"><b>Sistema de reconocimiento facial</b></h1>
+			        <FONT color = "white"><h4>WUNDERMAN THOMPSON</h4></FONT>
+			    
+			        {% if request.user.is_authenticated %}
+                        <a href="{% url 'erp:dashboard' %}">
+                            <i class="bx bx-user"></i> Bienvenido {{ request.user.username }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <i class="bx bx-door-open"></i> Login
+                        </a>
+                    {% endif %}
+
+                    <p> El siguiente proyecto </p>
+			        
+			    </div><!-- display-table -->
+			</div><!-- display-table-cell -->
+		</div>
+	</div>
+
+
+</body>
+</html>
