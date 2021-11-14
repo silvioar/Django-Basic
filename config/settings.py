@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,13 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1sz!&+lp)j4n@sz+$rzx8n+a%y&)8-@53tt!3%!15+)+9v_#@2'
-
+with open('secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 # SECURITY WARNING: don't run with debug turned on in production!
+#DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -131,17 +132,17 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'config/static'),
 )
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#LOGIN_REDIRECT_URL = '/erp/dashboard/'
-
-#LOGOUT_REDIRECT_URL = '/login/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
+
+# Heroku Settings
+django_heroku.settings(locals(), logging=False)
+
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
