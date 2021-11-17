@@ -28,7 +28,7 @@ class DashboardView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-
+    # Market Cap
     def get_mk(self):
         data = []
                   
@@ -43,16 +43,15 @@ class DashboardView(TemplateView):
         return data
 
     
-
+    # Mes
     def get_month(self): 
-        #try:            
-        fecha= datetime.now()
-        #locale.setlocale(locale.LC_ALL, ("es_ES", "UTF-8")) 
+              
+        fecha= datetime.now()        
         a = fecha.strftime("%b")           
-        #except:
-        #    pass
+        
         return a
-
+    
+    # Precios
     def get_prices(self): 
         
         df = get_cripto_data()
@@ -65,11 +64,8 @@ class DashboardView(TemplateView):
 
         return float(precio_btc), float(precio_eth), float(precio_link), float(precio_ada), float(precio_dot), round(float(precio_cro),2)
     
-
-    #####################################
-    # STOCK
-    #####################################
-    # Nombre de los productos
+    
+    # Volumen 1
     def get_graph_3(self):     
 
         df = get_cripto_data()
@@ -78,21 +74,20 @@ class DashboardView(TemplateView):
         
         return monedas
 
-    # Stock de los productos
+    # Volumen 2
     def get_graph_4(self):
 
         df = get_cripto_data()
         df = df.sort_values(["volumen"], ascending=False)
         precio = list(df['volumen'])
 
-
         return precio
             
-
+    # Conexion con JS
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['panel'] = 'Panel de administrador'
         
+        context = super().get_context_data(**kwargs)
+        context['panel'] = 'Panel de administrador'        
         context['graph_3'] = self.get_graph_3()
         context['graph_4'] = self.get_graph_4()     
         context['month'] = self.get_month()   
@@ -102,15 +97,8 @@ class DashboardView(TemplateView):
         context['ada'] = self.get_prices()[3]  
         context['dot'] = self.get_prices()[4]  
         context['cro'] = self.get_prices()[5]  
-
-        context['get_mk'] = self.get_mk() 
-        
-        
+        context['get_mk'] = self.get_mk()     
 
         return context
 
-def get_test(request):
-    
-    a = ['hola','chau','como','va']
-    
-    return render(request, 'dashboard.html', {'name': a})
+
